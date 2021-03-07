@@ -283,6 +283,42 @@ export const equal = R.curry(
 		),
 );
 
+/*
+* Check if a matrix is an identity matrix
+*
+* isIdentity([[1,0],[0,1]]);
+* true
+* */
+export const isIdentity = R.curryN(
+	1,
+	(matrix:number[][])=>
+		matrix.every((row, rowIndex)=>
+			row.every((cell, cellIndex)=>
+				cell === Number(cellIndex === rowIndex)
+			)
+		)
+);
+
+/*
+* Create a {rows, cols} identity matrix
+*
+* identity({rows: 2, cols: 2});
+* [[1,0],[0,1]]
+* */
+export const identity = R.curryN(
+	1,
+	(size:Dimensions)=>
+		R.addIndex<undefined, number[]>(R.map)(
+			(_, rowIndex)=>
+				R.set<number[], number>(
+					R.lensIndex(rowIndex),
+					1,
+					Array(size.cols).fill(0)
+				),
+			Array(size.rows)
+		)
+);
+
 
 /*
  * Generate matrices of size: {rows, cols}, with each cell in
